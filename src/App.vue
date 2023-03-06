@@ -15,6 +15,7 @@
           :description="card.description"
         />
       </div>
+      <Pagination :totalPages="totalPages" :currentPage="currentPage" @change-page="changePage" />
     </main>
   </div>
 </template>
@@ -22,17 +23,21 @@
 <script>
 import axios from "axios";
 import Card from "./components/Card.vue";
+import Pagination from "./components/Pagination.vue";
 import SearchBar from "./components/SearchBar.vue";
 
 export default {
   components: {
     Card,
+    Pagination,
     SearchBar
   },
   data() {
     return {
       cards: [],
-      searchTerm: ""
+      searchTerm: "",
+      currentPage: 1,
+      cardsPerPage: 20
     };
   },
   created() {
@@ -47,6 +52,18 @@ export default {
       return this.cards.filter(card =>
         card.name.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
+    },
+    totalPages() {
+      return Math.ceil(this.filteredCards.length / this.cardsPerPage);
+    },
+    paginatedCards() {
+      const startIndex = (this.currentPage - 1) * this.cardsPerPage;
+      return this.filteredCards.slice(startIndex, startIndex + this.cardsPerPage);
+    }
+  },
+  methods: {
+    changePage(page) {
+      this.currentPage = page;
     }
   }
 };
