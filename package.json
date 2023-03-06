@@ -1,0 +1,13 @@
+
+
+{
+  "name": "vite-yu-gi-oh",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "vite"
+  },
+  "dependencies": {
+    "axios": "^0.28.0",
+    "vue": "^3.2.35"
+  }
+}
